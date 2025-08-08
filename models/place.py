@@ -51,9 +51,6 @@ class Place(BaseModel, Base):
         def amenities(self):
             from models import storage
             from models.review import Amenity
-            amn_objs = storage.all(Amenity)
-            # print("this happened")
-            # print("this is amns: ", Place.amenity_ids)
             return Place.amenity_ids
 
         @amenities.setter

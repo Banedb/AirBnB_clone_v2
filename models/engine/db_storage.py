@@ -29,18 +29,17 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None): #incomplete
-        # self.__session = sessionmaker(bind=self.__engine)()
         new_dict = {}
         if cls:
             for obj in self.__session.query(cls):
                 key = f"{obj.__class__.__name__}.{obj.id}"
-                obj.__dict__.pop('_sa_instance_state', None)
+                # obj.__dict__.pop('_sa_instance_state', None)
                 new_dict[key] = obj
         else:
             for clss in [State, City, User, Amenity, Place, Review]:
                 for obj in self.__session.query(clss):
                     key = f"{obj.__class__.__name__}.{obj.id}"
-                    obj.__dict__.pop('_sa_instance_state', None)
+                    # obj.__dict__.pop('_sa_instance_state', None)
                     new_dict[key] = obj
         return new_dict
 
