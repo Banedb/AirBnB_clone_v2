@@ -18,6 +18,7 @@ class DBStorage:
     __session = None
 
     def __init__(self):
+        """Initialize the DBStorage instance."""
         user = getenv("HBNB_MYSQL_USER")
         passwd = getenv("HBNB_MYSQL_PWD")
         host = getenv("HBNB_MYSQL_HOST")
@@ -30,6 +31,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
+        """Return all objects from the database."""
         new_dict = {}
         if cls:
             for obj in self.__session.query(cls):

@@ -42,6 +42,7 @@ class Place(BaseModel, Base):
     else:
         @property
         def reviews(self):
+            """Getter method for reviews."""
             from models import storage
             from models.review import Review
             rev_objs = storage.all(Review)
@@ -49,12 +50,12 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            from models import storage
-            from models.review import Amenity
+            """Getter method for amenities."""
             return Place.amenity_ids
 
         @amenities.setter
         def amenities(self, obj):
+            """Setter method for amenities."""
             from models.review import Amenity
             if isinstance(obj, Amenity):
                 Place.amenity_ids.append(obj.id)
