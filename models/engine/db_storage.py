@@ -11,6 +11,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 
+
 class DBStorage:
     """This class manages database storage."""
     __engine = None
@@ -28,7 +29,7 @@ class DBStorage:
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cls=None): #incomplete
+    def all(self, cls=None):
         new_dict = {}
         if cls:
             for obj in self.__session.query(cls):
