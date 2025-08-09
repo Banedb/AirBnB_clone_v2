@@ -35,7 +35,7 @@ class Place(BaseModel, Base):
         )
         amenities = relationship(
             "Amenity",
-            secondary="place_amenity",
+            secondary=place_amenity,
             backref="place",
             viewonly=False  # default anyway
         )
@@ -46,16 +46,23 @@ class Place(BaseModel, Base):
             from models import storage
             from models.review import Review
             rev_objs = storage.all(Review)
-            return [rv for rv in rev_objs.values() if rv.place_id == self.id]
+            return [
+                rev for rev in rev_objs.values() if rev.place_id == self.id
+            ]
 
         @property
         def amenities(self):
             """Getter method for amenities."""
-            return Place.amenity_ids
+            from models import storage
+            from models.amenity import Amenity
+            amn_objs = storage.all(Amenity)
+            return [
+                amn for amn in amn_objs.values() if amn.id in self.amenity_ids
+            ]
 
         @amenities.setter
         def amenities(self, obj):
             """Setter method for amenities."""
-            from models.review import Amenity
-            if isinstance(obj, Amenity):
-                Place.amenity_ids.append(obj.id)
+            from models.amenity import Amenity
+            if isinstance(obj, Amenity) and obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)
