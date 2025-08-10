@@ -34,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
             }
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        HBNBCommand.classes.pop("BaseModel", None)
+        classes.pop("BaseModel", None)
 
     # def preloop(self):
     #     """Prints if isatty is false"""
