@@ -12,6 +12,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from os import getenv
 
 
 class HBNBCommand(cmd.Cmd):
@@ -31,6 +32,9 @@ class HBNBCommand(cmd.Cmd):
              'max_guest': int, 'price_by_night': int,
              'latitude': float, 'longitude': float
             }
+
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        HBNBCommand.classes.pop("BaseModel", None)
 
     # def preloop(self):
     #     """Prints if isatty is false"""
