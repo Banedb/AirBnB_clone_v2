@@ -75,7 +75,7 @@ class test_Amenity_BaseModel(unittest.TestCase):
             self.assertEqual(instance.name, "Barbie")
 
     def test_user_id_and_createat(self):
-        """testing id for every user"""
+        """Testing id for every user"""
         user_1 = Amenity()
         sleep(2)
         user_2 = Amenity()

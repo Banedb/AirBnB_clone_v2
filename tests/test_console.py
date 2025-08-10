@@ -18,6 +18,10 @@ class TestHBNBCommand(unittest.TestCase):
         """Sets up test cases."""
         self.tearDown()
         self.cmd = console.HBNBCommand()
+        # Make precmd run
+        main_onecmd = self.cmd.onecmd
+        self.cmd.onecmd = lambda line: main_onecmd(self.cmd.precmd(line))
+
         storage._FileStorage__objects = {}
         self.classes = ["BaseModel", "User", "Place", "State",
                         "City", "Amenity", "Review"]

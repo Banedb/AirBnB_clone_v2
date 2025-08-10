@@ -5,7 +5,7 @@ import cmd
 import sys
 import shlex
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -171,7 +171,7 @@ class HBNBCommand(cmd.Cmd):
 
         key = c_name + "." + c_id
         try:
-            print(storage._FileStorage__objects[key])
+            print(storage.all()[key])
         except KeyError:
             print("** no instance found **")
 
@@ -230,11 +230,19 @@ class HBNBCommand(cmd.Cmd):
         print("Shows all objects, or all of a class")
         print("[Usage]: all <className>\n")
 
-    def do_count(self, args):
+    def do_count(self, line):
         """Count current number of class instances"""
+        args = shlex.split(line)
+
+        if not args:
+            print("** class name missing **")
+            return
+        if args[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
         count = 0
-        for k, v in storage._FileStorage__objects.items():
-            if args == k.split('.')[0]:
+        for key in storage.all():
+            if args[0] == key.split('.')[0]:
                 count += 1
         print(count)
 

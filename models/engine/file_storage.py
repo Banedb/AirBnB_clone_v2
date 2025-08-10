@@ -12,16 +12,16 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         if cls:
             return {
-                k: v for k, v in FileStorage.__objects.items()
+                k: v for k, v in self.__objects.items()
                 if isinstance(v, cls)
             }
-        return FileStorage.__objects
+        return self.__objects
 
     def delete(self, obj=None):
         """Deletes obj from __objects if available."""
         if obj:
-            FileStorage.__objects = {
-                k: v for k, v in FileStorage.__objects.items() if v != obj
+            self.__objects = {
+                k: v for k, v in self.__objects.items() if v != obj
             }
 
     def new(self, obj):
@@ -30,13 +30,11 @@ class FileStorage:
         self.__objects[name] = obj
 
     def save(self):
-        """Saves storage dictionary to file"""
-        with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
-            json.dump(temp, f)
+        """Serialises instances in `__objects` to json file"""
+        with open(self.__file_path, "w", encoding="utf-8") as f:
+            new_dict = {nameid: obj.to_dict()
+                        for nameid, obj in self.__objects.items()}
+            json.dump(new_dict, f)
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -55,7 +53,7 @@ class FileStorage:
                   }
         try:
             temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
+            with open(self.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
                     self.all()[key] = classes[val['__class__']](**val)
