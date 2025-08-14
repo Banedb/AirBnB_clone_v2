@@ -8,8 +8,7 @@ def do_pack():
     """Generates a .tgz archive from the `web_static` folder."""
     now = datetime.now()
     tar = f'web_static_{now.strftime("%Y%m%d%H%M%S")}.tgz'
-    r = local(f"mkdir -p versions && tar -czvf versions/{tar} web_static/",
-              warn=True)
+    r = local(f"mkdir -p versions && tar -czvf versions/{tar} web_static/")
 
     return tar if r.succeeded else None
 
