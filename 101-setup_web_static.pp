@@ -8,7 +8,7 @@ package { 'nginx':
 service { 'nginx':
   ensure    => running,
   enable    => true,
-  subscribe => File['/etc/nginx/sites-available/default']
+  subscribe => File['/etc/nginx/sites-available/default']  # Reload if file changes.
 }
 
 file { '/etc/nginx/sites-available/default':
@@ -19,22 +19,28 @@ file { '/data/':
   ensure  => directory,
   owner   => 'ubuntu',
   group   => 'ubuntu',
-  recurse => true
+  recurse => true,
+  require => Exec['make-directories']
 }
 
 file { '/data/web_static/releases/test/index.html':
   ensure  => file,
-  content => "<html>\n  <head>\n  </head>\n  <body>\nALX\n  </body>\n</html>\n"
+  owner   => 'ubuntu',
+  group   => 'ubuntu',
+  content => "<html>\n  <head>\n  </head>\n  <body>\nALX\n  </body>\n</html>\n",
+  require => File['/data/']
 }
 
 file { '/data/web_static/current':
-  ensure => link,
-  target => '/data/web_static/releases/test/'
+  ensure  => link,
+  target  => '/data/web_static/releases/test/',
+  owner   => 'ubuntu',
+  group   => 'ubuntu',
+  require => File['/data/']
 }
 
 exec { 'make-directories':
   command => '/usr/bin/mkdir -p /data/web_static/shared/ /data/web_static/releases/test/',
-  before  => File['/data/web_static/releases/test/index.html']
 }
 
 exec { 'add-hbnb_static':
