@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-"""1-pack_web_static module"""
+"""2-do_deploy_web_static module"""
 from fabric.api import env, put, run
 import os
 
-env.hosts = ["172.18.0.3", "172.18.0.2"]
+env.hosts = ["172.18.0.3", "172.18.0.4"]
 env.user = "ubuntu"
 
 

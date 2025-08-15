@@ -1,0 +1,16 @@
+#!/usr/bin/python3
+"""3-deploy_web_static module"""
+from fabric.api import env
+do_pack = __import__("1-pack_web_static").do_pack
+do_deploy = __import__("2-do_deploy_web_static").do_deploy
+
+env.hosts = ["172.18.0.3", "172.18.0.4"]
+env.user = "ubuntu"
+
+
+def deploy():
+    """Deploys the .tgz archive to the web servers."""
+    file_path = do_pack()
+    if not file_path:
+        return False
+    return do_deploy(file_path)
