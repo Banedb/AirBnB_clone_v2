@@ -11,7 +11,8 @@ def do_clean(number=0):
     Args:
         number(int): Number of archives to keep.
     """
-    keep = 2 if number == 0 else int(number) + 1
+    keep = 2 if int(number) == 0 else int(number) + 1
+
     local(
         f'ls -1t versions | grep "^web_static_" | tail -n +{keep} | '
         'xargs -I ar rm -f versions/ar'
