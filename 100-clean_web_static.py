@@ -2,7 +2,7 @@
 """100-clean_web_static module"""
 from fabric.api import env, local, run
 
-env.hosts = ["172.18.0.3", "172.18.0.4"]
+env.hosts = ["3.85.20.10", "107.23.44.113"]
 env.user = "ubuntu"
 
 
