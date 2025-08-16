@@ -3,8 +3,8 @@
 from fabric.api import env, put, run
 import os
 
-# env.hosts = ["172.18.0.3", "172.18.0.4"]
-# env.user = "ubuntu"
+env.hosts = ["3.85.20.10", "107.23.44.113"]
+env.user = "ubuntu"
 
 
 def do_deploy(archive_path):
