@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """db_storage module"""
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -64,4 +64,8 @@ class DBStorage:
         """Create all tables in the database."""
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(Session)()
+        self.__session = scoped_session(Session)
+
+    def close(self):
+        """Closes the session factory."""
+        self.__session.remove()
