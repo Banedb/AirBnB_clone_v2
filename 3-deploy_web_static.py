@@ -4,7 +4,7 @@ from fabric.api import env
 do_pack = __import__("1-pack_web_static").do_pack
 do_deploy = __import__("2-do_deploy_web_static").do_deploy
 
-env.hosts = ["172.18.0.3", "172.18.0.4"]
+env.hosts = ["3.85.20.10", "107.23.44.113"]
 env.user = "ubuntu"
 
 
