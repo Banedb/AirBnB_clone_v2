@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String
+from datetime import datetime
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.orm import relationship
 from os import getenv
 
@@ -9,6 +10,9 @@ from os import getenv
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
+    id = Column(String(60), primary_key=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     name = Column(String(128), nullable=False, default="")
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
